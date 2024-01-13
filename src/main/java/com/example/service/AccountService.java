@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.example.entity.Account;
 import com.example.exception.DuplicateUsernameException;
 import com.example.exception.PasswordTooShortException;
+import com.example.exception.UnauthorizedLoginException;
 import com.example.exception.UsernameBlankException;
 import com.example.repository.AccountRepository;
 
@@ -38,6 +39,18 @@ public class AccountService {
         }
 
         return accountRepository.save(account);
+    }
+
+    public Account login(Account account){
+        String username = account.getUsername();
+        String password = account.getPassword();
+
+        Account loggedInAccount = 
+        accountRepository.findByUsernameAndPassword(username,password)
+        .orElseThrow(() -> new UnauthorizedLoginException());
+
+        //Successful
+        return loggedInAccount;
     }
 
 }
