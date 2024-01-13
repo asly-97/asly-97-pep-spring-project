@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.exception.DuplicateUsernameException;
+import com.example.exception.InvalidMessageTextException;
 import com.example.exception.PasswordTooShortException;
 import com.example.exception.UnauthorizedLoginException;
 import com.example.exception.UsernameBlankException;
@@ -49,6 +51,12 @@ public class SocialMediaController {
                 .body(accountService.login(account));
     }
 
+    @PostMapping("messages")
+    public ResponseEntity<Message> createNewMessage(@RequestBody Message message){
+        return ResponseEntity.ok()
+                .body(messageService.createMessage(message));
+    }
+
 
 
     // Handling Exceptions --- Registration
@@ -75,6 +83,14 @@ public class SocialMediaController {
     @ExceptionHandler(UnauthorizedLoginException.class)
     public ResponseEntity<String> handleUnauthorizedLoginException(UnauthorizedLoginException ex){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                            .body(ex.getMessage());
+    }
+
+    // Handling Exceptions --- Create New Message
+
+    @ExceptionHandler(InvalidMessageTextException.class)
+    public ResponseEntity<String> handleInvalidMessageTextException(InvalidMessageTextException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(ex.getMessage());
     }
 

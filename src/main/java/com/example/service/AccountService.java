@@ -33,10 +33,8 @@ public class AccountService {
         }
 
         // Check if the username is already exist
-        Optional<Account> optAccount = accountRepository.findByUsername(account.getUsername());
-        if(optAccount.isPresent()){
-            throw new DuplicateUsernameException();
-        }
+        accountRepository.findByUsername(account.getUsername())
+        .orElseThrow(DuplicateUsernameException::new);
 
         return accountRepository.save(account);
     }
