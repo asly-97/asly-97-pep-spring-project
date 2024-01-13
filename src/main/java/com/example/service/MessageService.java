@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Message;
-import com.example.exception.InvalidMessageTextException;
+import com.example.exception.InvalidMessageDataException;
 import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
 
@@ -27,11 +27,11 @@ public class MessageService {
         String textMessage = newMessage.getMessage_text();
 
         if(textMessage.isBlank() || textMessage.length() > 255){
-            throw new InvalidMessageTextException();
+            throw new InvalidMessageDataException();
         }
 
         accountRepository.findById(newMessage.getPosted_by())
-        .orElseThrow(InvalidMessageTextException::new);
+        .orElseThrow(InvalidMessageDataException::new);
 
         return messageRepository.save(newMessage);
     }
@@ -45,7 +45,7 @@ public class MessageService {
                 .orElse(null);
     }
 
-    public int deleteMessageById(int id){
+    public Integer deleteMessageById(int id){
         Optional<Message> optionalMessage = messageRepository.findById(id);
 
         if(optionalMessage.isPresent()){
@@ -53,10 +53,23 @@ public class MessageService {
             messageRepository.delete(message);
             return 1;
         }
-        else{
-            return 0;
+        return null;
+    }
+
+    public int updateMessage(int message_id, String message_text){
+
+        Message updatedMessage = messageRepository.findById(message_id)
+                        .orElseThrow(InvalidMessageDataException::new);
+        
+        if(message_text.isBlank() || message_text.length() > 255){
+            throw new InvalidMessageDataException();
         }
 
+        updatedMessage.setMessage_text(message_text);
+
+        messageRepository.save(updatedMessage);
+
+        return 1;
     }
 
     

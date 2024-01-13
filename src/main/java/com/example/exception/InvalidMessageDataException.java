@@ -1,8 +1,8 @@
 package com.example.exception;
 
-public class InvalidMessageTextException extends RuntimeException{
+public class InvalidMessageDataException extends RuntimeException{
 
-    public InvalidMessageTextException(){
+    public InvalidMessageDataException(){
         super("The text message should not be blank, and should be under 255 characters.");
     }
     

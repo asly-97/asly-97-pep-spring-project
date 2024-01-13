@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.exception.DuplicateUsernameException;
-import com.example.exception.InvalidMessageTextException;
+import com.example.exception.InvalidMessageDataException;
 import com.example.exception.PasswordTooShortException;
 import com.example.exception.UnauthorizedLoginException;
 import com.example.exception.UsernameBlankException;
@@ -76,9 +77,14 @@ public class SocialMediaController {
 
     @DeleteMapping("messages/{message_id}")
     public ResponseEntity<Integer> deleteMessageById(@PathVariable int message_id){
-        Integer res = messageService.deleteMessageById(message_id) == 1 ? 1 : null;
         return ResponseEntity.status(200)
-                .body(res);
+                .body(messageService.deleteMessageById(message_id));
+    }
+
+    @PatchMapping("messages/{message_id}")
+    public ResponseEntity<Integer> updateMessage(@PathVariable int message_id, @RequestBody Message updatedMessage){
+        return ResponseEntity.status(200)
+                .body(messageService.updateMessage(message_id, updatedMessage.getMessage_text()));
     }
 
 
@@ -112,8 +118,8 @@ public class SocialMediaController {
 
     // Handling Exceptions --- Create New Message
 
-    @ExceptionHandler(InvalidMessageTextException.class)
-    public ResponseEntity<String> handleInvalidMessageTextException(InvalidMessageTextException ex){
+    @ExceptionHandler(InvalidMessageDataException.class)
+    public ResponseEntity<String> handleInvalidMessageTextException(InvalidMessageDataException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(ex.getMessage());
     }
