@@ -21,12 +21,12 @@ public class Message {
      * application.
      */
     @Column (name="posted_by")
-    private Integer posted_by;
+    private Integer postedBy;
     /**
      * The text for this message- eg "this is my first post!". Must be not blank and under 255 characters
      */
     @Column (name="message_text")
-    private String message_text;
+    private String message_text; 
     /**
      * The epoch time when this tweet was posted (number of seconds since Jan 1, 1970). Longs are large enough
      * to store this number. We will assume that this number is provided by the front-end of this application.
@@ -47,7 +47,7 @@ public class Message {
      * @param time_posted_epoch
      */
     public Message(Integer posted_by, String message_text, Long time_posted_epoch) {
-        this.posted_by = posted_by;
+        this.postedBy = posted_by;
         this.message_text = message_text;
         this.time_posted_epoch = time_posted_epoch;
     }
@@ -61,7 +61,7 @@ public class Message {
      */
     public Message(Integer message_id, Integer posted_by, String message_text, Long time_posted_epoch) {
         this.message_id = message_id;
-        this.posted_by = posted_by;
+        this.postedBy = posted_by;
         this.message_text = message_text;
         this.time_posted_epoch = time_posted_epoch;
     }
@@ -83,15 +83,15 @@ public class Message {
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
      * @return posted_by
      */
-    public Integer getPosted_by() {
-        return posted_by;
+    public Integer getPostedBy() {
+        return postedBy;
     }
     /**
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
      * @param posted_by
      */
-    public void setPosted_by(Integer posted_by) {
-        this.posted_by = posted_by;
+    public void setPostedBy(Integer posted_by) {
+        this.postedBy = posted_by;
     }
     /**
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
@@ -146,10 +146,10 @@ public class Message {
 				return false;
 		} else if (!message_text.equals(other.message_text))
 			return false;
-		if (posted_by == null) {
-			if (other.posted_by != null)
+		if (postedBy == null) {
+			if (other.postedBy != null)
 				return false;
-		} else if (!posted_by.equals(other.posted_by))
+		} else if (!postedBy.equals(other.postedBy))
 			return false;
 		if (time_posted_epoch == null) {
 			if (other.time_posted_epoch != null)
@@ -167,7 +167,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "message_id=" + message_id +
-                ", posted_by=" + posted_by +
+                ", posted_by=" + postedBy +
                 ", message_text='" + message_text + '\'' +
                 ", time_posted_epoch=" + time_posted_epoch +
                 '}';

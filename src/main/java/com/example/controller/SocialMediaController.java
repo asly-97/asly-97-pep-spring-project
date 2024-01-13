@@ -87,6 +87,12 @@ public class SocialMediaController {
                 .body(messageService.updateMessage(message_id, updatedMessage.getMessage_text()));
     }
 
+    @GetMapping("/accounts/{account_id}/messages")
+    public ResponseEntity<List<Message>> getMessagesByAccountId(@PathVariable int account_id){
+        return ResponseEntity.ok()
+            .body(messageService.getMessagesByAccountId(account_id));
+    }
+
 
 
     // Handling Exceptions --- Registration
