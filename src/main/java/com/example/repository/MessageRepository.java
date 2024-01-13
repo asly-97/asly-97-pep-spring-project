@@ -2,7 +2,9 @@ package com.example.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.entity.Message;
@@ -10,5 +12,6 @@ import com.example.entity.Message;
 @Repository
 public interface MessageRepository extends CrudRepository<Message,Integer>{
 
-    List<Message> findAllByPostedBy(int account_id);
+    @Query("FROM Message m WHERE m.posted_by = :account_id")
+    List<Message> findAllByAccountId(@Param("account_id") int account_id);
 }

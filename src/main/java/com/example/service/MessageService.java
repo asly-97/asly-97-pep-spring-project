@@ -30,7 +30,7 @@ public class MessageService {
             throw new InvalidMessageDataException();
         }
 
-        accountRepository.findById(newMessage.getPostedBy())
+        accountRepository.findById(newMessage.getPosted_by())
         .orElseThrow(InvalidMessageDataException::new);
 
         return messageRepository.save(newMessage);
@@ -73,7 +73,7 @@ public class MessageService {
     }
 
     public List<Message> getMessagesByAccountId(int account_id){
-        return messageRepository.findAllByPostedBy(account_id);
+        return messageRepository.findAllByAccountId(account_id);
     }
 
     

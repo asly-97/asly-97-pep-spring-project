@@ -21,7 +21,7 @@ public class Message {
      * application.
      */
     @Column (name="posted_by")
-    private Integer postedBy;
+    private Integer posted_by;
     /**
      * The text for this message- eg "this is my first post!". Must be not blank and under 255 characters
      */
@@ -47,7 +47,7 @@ public class Message {
      * @param time_posted_epoch
      */
     public Message(Integer posted_by, String message_text, Long time_posted_epoch) {
-        this.postedBy = posted_by;
+        this.posted_by = posted_by;
         this.message_text = message_text;
         this.time_posted_epoch = time_posted_epoch;
     }
@@ -61,7 +61,7 @@ public class Message {
      */
     public Message(Integer message_id, Integer posted_by, String message_text, Long time_posted_epoch) {
         this.message_id = message_id;
-        this.postedBy = posted_by;
+        this.posted_by = posted_by;
         this.message_text = message_text;
         this.time_posted_epoch = time_posted_epoch;
     }
@@ -83,15 +83,15 @@ public class Message {
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
      * @return posted_by
      */
-    public Integer getPostedBy() {
-        return postedBy;
+    public Integer getPosted_by() {
+        return posted_by;
     }
     /**
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
      * @param posted_by
      */
-    public void setPostedBy(Integer posted_by) {
-        this.postedBy = posted_by;
+    public void setPosted_by(Integer posted_by) {
+        this.posted_by = posted_by;
     }
     /**
      * Properly named getters and setters are necessary for Jackson ObjectMapper to work. You may use them as well.
@@ -146,10 +146,10 @@ public class Message {
 				return false;
 		} else if (!message_text.equals(other.message_text))
 			return false;
-		if (postedBy == null) {
-			if (other.postedBy != null)
+		if (posted_by == null) {
+			if (other.posted_by != null)
 				return false;
-		} else if (!postedBy.equals(other.postedBy))
+		} else if (!posted_by.equals(other.posted_by))
 			return false;
 		if (time_posted_epoch == null) {
 			if (other.time_posted_epoch != null)
@@ -167,7 +167,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "message_id=" + message_id +
-                ", posted_by=" + postedBy +
+                ", posted_by=" + posted_by +
                 ", message_text='" + message_text + '\'' +
                 ", time_posted_epoch=" + time_posted_epoch +
                 '}';
