@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Message;
@@ -31,6 +33,10 @@ public class MessageService {
         .orElseThrow(InvalidMessageTextException::new);
 
         return messageRepository.save(newMessage);
+    }
+
+    public List<Message> getAllMessages(){
+        return (List<Message>) messageRepository.findAll();
     }
 
     
